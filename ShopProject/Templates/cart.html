@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+   {% load static %}    
+{% block body %}
+<div class="container">
+    
+    <div class="row">
+        <div class="col-lg-7">
+            {% for i in data %}
+            <div class="row mt-4 border p-3 dtls-img">
+                <div class="col-lg-5">
+                    <img src="{{i.product.image.url}}" alt="" width="100%">
+                </div>
+                <div class="col-lg-7">
+                    <h1>{{i.product.name}}</h1>
+                    <h6>{{i.product.desc}}</h6>
+                    <h4>Qty:{{i.quantity}}</h4>
+                    <div class="row">
+                        <div class="col-lg-1 ">
+                            <a href="{% url 'cart:remove' i.product.id %}"><span class="material-symbols-outlined text-dark">
+                                indeterminate_check_box
+                                </span></a>
+                        </div>
+                        <div class="col-lg-1 ">
+                            <a href="{% url 'cart:cart' i.product.id %}"><span class="material-symbols-outlined text-dark">
+                                add_box
+                                </span></a>
+                        </div>
+                        <div class="col-lg  ">
+                            <a href="{% url 'cart:delete' i.product.id %}"><span class="material-symbols-outlined text-danger">
+                                delete
+                                </span></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg"><h3>Price:{{i.product.price}}</h3></div>
+                        <div class="col-lg"><a href="#" class="btn btn-warning">Buy Now</a></div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <h3 class="text-center " >Your cart is EMPTY</h3>
+            {% endfor %}
+        </div>
+        <div class="col-lg-5 mt-4 total">
+            <div class="row m-2 border border-5 total">
+                <div class="col-lg-6 border border-3 total"><h4>Product</h4></div>
+                <div class="col-lg-6 border border-3 total"><h4>Price</h4></div>
+                
+                {% for item in data %}
+                <div class="col-lg-6 border border-3 total">
+                   <h6 > {{ item.product.name }}</h6> 
+                </div>
+                <div class="col-lg-6 border border-3 total">
+                    <p> {{ item.product.price }} x ({{item.quantity}})</p>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="border border-3 m-2 total">
+                <h2>Total Amount= {{ total_amount }}</h2>
+            </div>
+            <div class="text-center">
+                <a href="{% url 'cart:buy'  %}" class="btn btn-warning"><b>Place order</b></a>
+            </div>
+
+        </div>
+        {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+        
+    </div>
+
+
+    
+</div>
+
+
+
+ {% endblock %}

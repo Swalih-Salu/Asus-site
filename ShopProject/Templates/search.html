@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+   {% load static %}    
+{% block body %}
+
+<div class="container ">
+    <div class=" row ">
+    {% for i in product %}
+    <div class="col-lg mt-2">
+      <div class="card " style="width: 18rem;">
+        <a href="details/{{i.id}}"><img src="{{i.image.url}}" class="card-img-top" alt="..." height="200px"></a>
+        <div class="card-body ">
+          <h4 class="card-text text-dark text-center fw-bolder fst-italic "><button class="button-89" role="button">{{i.name}}</button></h4> 
+          
+          <p class="text-center fw-bolder fst-italic">Rs:{{i.price}}</p>
+          <div class="d-flex justify-content-center">
+            <a href="{%  url 'shop:details' i.id %}" ><button class="button-55" role="button">Details</button></a>
+            <a href="{%  url 'shop:wishlist' i.id %}" class="ms-4 ">
+              <!-- HTML !-->
+              <button class="button-49" role="button"><span class="material-symbols-outlined">
+            heart_plus
+            </span></button></a>
+          </div>
+          </div>
+      </div>
+    </div>
+    {% empty %}
+    <h4>NO PRODUCTS ARE AVILABLE......Click <a href="{% url 'shop:home' %}">here</a> to go to home</h4>
+    {% endfor %}
+{% endblock %}
